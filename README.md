@@ -10,4 +10,4 @@ In order to use this service, you will need a valid API key from ipdata.co. Here
 6. Once you have confirmed your account, you can log in to the website and access your API key from your account dashboard.
 7. Use the key in the API request URL in the code provided.
 
-Make sure to replace `API_KEY` with the actual key obtained from the ipdata.co website in the code provided by me.
+Make sure to replace `API_KEY` with the actual key obtained from the ipdata.co website in the code provided by me
