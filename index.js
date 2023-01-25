@@ -3,7 +3,7 @@ const IPData = require("ipdata").default;
 const app = express();
 require('dotenv').config();
 
-const apiKey = process.env.API_KEY;
+const apiKey = "e52b05757ad1ed4a66cc621d9e09af5f33256b8273fc9421805b5bc3";
 const ipdata = new IPData(apiKey);
 
 app.get('/location', async (req, res) => {
