@@ -22,7 +22,7 @@
         })
         .then(response => {
           const locationData = response.data;
-          document.getElementById("ip").innerHTML = `IP : ${locationData.postal}`;
+          document.getElementById("ip").innerHTML = `IP : ${locationData.ip}`;
           document.getElementById("region").innerHTML = `Region : ${locationData.region}`;
           document.getElementById("city").innerHTML =`City : ${locationData.city}`;
           document.getElementById("country").innerHTML =`country : ${locationData.country_name}`;
