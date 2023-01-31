@@ -1,0 +1,36 @@
+<html>
+  <body style="">
+    <button onclick="getLocation()">Location</button>
+    <p id="ip"></p>
+    <p id="region"></p>
+    <p id="city"></p>
+    <p id="country"></p>
+    <p id="postal Code"></p>
+    <p id="location"></p>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      function getLocation(){
+        axios.get('https://ident.me')
+        .then(response => {
+          const clientIp = response.data;
+          console.log(clientIp);
+          return axios.get(`http://127.0.0.1:8000/lookup-location`, {
+            headers: {
+              'X-Client-IP': clientIp
+            }
+          });
+        })
+        .then(response => {
+          const locationData = response.data;
+          document.getElementById("ip").innerHTML = `IP : ${locationData.postal}`;
+          document.getElementById("region").innerHTML = `Region : ${locationData.region}`;
+          document.getElementById("city").innerHTML =`City : ${locationData.city}`;
+          document.getElementById("country").innerHTML =`country : ${locationData.country_name}`;
+          document.getElementById("postal Code").innerHTML =`postal Code : ${locationData.postal}`;
+          
+        })
+        .catch(error => console.error(error));
+      }
+    </script>
+  </body>
+</html>

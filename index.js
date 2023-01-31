@@ -1,28 +1,27 @@
 const express = require('express');
-const IPData = require("ipdata").default;
+const axios = require('axios');
 const app = express();
-require('dotenv').config();
 
-const apiKey = process.env.API_KEY;
-const ipdata = new IPData(apiKey);
-
-app.get('/location', async (req, res) => {
-    try {
-        const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || req.ip;
-        const data = await ipdata.lookup(ip);
-        console.log(data);
-        res.json({
-            city: data.city,
-            region: data.region,
-            country: data.country_name,
-            postal:data.postal
-        });
-    } catch (error) {
-        console.log(error);
-        res.status(500).send('Error looking up location');
-    }
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-ip");
+  next();
 });
 
-app.listen(3000, () => {
-    console.log('Server started on port 3000');
+app.get('/lookup-location', async (req, res) => {
+  try {
+    const clientIp = req.headers['x-client-ip'];
+    const response = await axios.get(`https://api.ipdata.co/${clientIp}?api-key=e52b05757ad1ed4a66cc621d9e09af5f33256b8273fc9421805b5bc3`);
+    const locationData = response.data;
+    console.log(locationData);
+   return  res.json(locationData);
+  } catch (error) {
+   return res.status(500).send({
+      message: 'Error looking up location',
+      err: error
+    });
+  }
+
 });
+
+app.listen(8000, () => console.log('Listening on port 8000'));
